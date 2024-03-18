@@ -15,6 +15,11 @@ fn main() {
             .help("Copies specified file from source to destination")
             .takes_value(true)
             .min_values(2))
+        .arg(Arg::new("file")
+            .short('f')
+            .help("Copies specified file from source to destination")
+            .takes_value(true)
+            .min_values(2))
         .get_matches();
     
     if let Some(args) = matches.values_of("cut"){
@@ -36,7 +41,20 @@ fn main() {
            process::exit(0);
         }
         
-    } 
+    }
+
+    
+    if let Some(directory) = matches.values_of("file"){
+        let directory_values: Vec<&str> = directory.collect();
+        let source = directory_values[0];
+        let destination = directory_values[1];
+       if let Err(e) = api::cliprust::copy_dir_all(&source, &destination){
+           println!("Error copying file: {}", e);
+           process::exit(0);
+        }
+        
+    }
+
  
 }
 
