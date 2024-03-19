@@ -17,7 +17,7 @@ fn main() {
             .min_values(2))
         .arg(Arg::new("file")
             .short('f')
-            .help("Copies specified file from source to destination")
+            .help("Copies a directory from source to destination")
             .takes_value(true)
             .min_values(2))
         .get_matches();
@@ -39,8 +39,7 @@ fn main() {
        if let Err(e) = api::cliprust::copy(&source, &destination){
            println!("Error copying file: {}", e);
            process::exit(0);
-        }
-        
+        }   
     }
 
     
